@@ -1,0 +1,55 @@
+import discord
+from discord.ext import commands
+from bot_logic import vrem
+from bot_logic import gen_pass
+from options import TOKEN
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='!', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'Бот {bot.user} запущен')
+
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Hi! I am {bot.user}!')
+
+@bot.command()
+async def heh(ctx, count_heh = 5):
+    await ctx.send("he" * count_heh)
+
+@bot.command()
+async def time(ctx):
+    await ctx.send(vrem())
+
+@bot.command()
+async def joined(ctx, member: discord.Member):
+    await ctx.send(f'{member.name} joined {discord.utils.format_dt(member.joined_at)}')
+
+@bot.command()
+async def cpass(ctx, dl = 10):
+    await ctx.send(gen_pass(dl))
+
+@bot.command()
+async def cool_bot(ctx):
+    await ctx.send('Yes, the bot is cool.')
+
+@bot.command()
+async def add(ctx, left: int, right: int):
+    await ctx.send(left + right)
+
+@bot.command()
+async def cmd(ctx):
+    await ctx.send('!cmd')
+    await ctx.send('!hello')
+    await ctx.send('!heh (number of he)')
+    await ctx.send('!time')
+    await ctx.send('!joined (user)')
+    await ctx.send('!cpass (password length)')
+    await ctx.send('!cool_bot')
+    await ctx.send('!add (1st number) (2nd number)')
+
+bot.run(TOKEN)
