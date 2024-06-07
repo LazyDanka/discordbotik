@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 from bot_logic import vrem
 from bot_logic import gen_pass
-from options import TOKEN
 
 intents = discord.Intents.default()
 intents.message_content = True
